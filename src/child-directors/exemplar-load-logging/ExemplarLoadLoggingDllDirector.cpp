@@ -109,7 +109,7 @@ bool ExemplarLoadLoggingDllDirector::OnStart(cIGZCOM* pCOM)
 			// adds the cIExemplarLoadHookServer class into the game.
 			//
 			// Other DLLs should put the cIExemplarLoadHookServer GetClassObject call in PreAppInit.
-			// This is because there is no guarantee that SC4 will load you DLL and call its OnStart
+			// This is because there is no guarantee that SC4 will load your DLL and call its OnStart
 			// method after the SC4ResourceLoadingHooks DLL.
 
 			cRZAutoRefCount<cIExemplarLoadHookServer> exemplarHookServer;
