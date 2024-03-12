@@ -15,7 +15,7 @@ is returned to the game.
 
 ## Using the Code
 
-1. Copy the headers from `src/public-headers/include` folder into your GZCOM DLL project.
+1. Copy the headers from `src/public/include` folder into your GZCOM DLL project.
 2. Implement `cIExemplarLoadHookTarget` and/or `cIExemplarLoadErrorHookTarget` as additional interface(s) on
 your GZCOM DLL director.
 3. Register for the exemplar load and/or error notifications in `PreAppInit`.
