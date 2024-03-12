@@ -188,7 +188,7 @@ void ExemplarLoadLoggingDllDirector::SetLoggerFromCommandLine(const std::string_
 	else if (StringViewUtil::EqualsIgnoreCase(argName, "TGI"sv))
 	{
 		exemplarLogger = std::make_unique<ExemplarTGILogger>(
-			/*logResourceLoadErrors*/true,
+			/*logResourceLoadErrors*/false,
 			logFilePath,
 			false);
 	}
