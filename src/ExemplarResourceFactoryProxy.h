@@ -19,7 +19,7 @@
 static constexpr uint32_t GZCLSID_ExemplarFactoryProxy = 0xEDA309D9;
 static constexpr uint32_t ExemplarTypeID = 0x6534284A;
 
-class ExemplarResourceFactoryProxy :
+class ExemplarResourceFactoryProxy final :
 	public ResourceFactoryProxy,
 	private cIExemplarLoadHookServer
 {
