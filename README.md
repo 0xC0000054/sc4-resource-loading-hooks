@@ -2,9 +2,6 @@
 
 A DLL Plugin for SimCity 4 that allows other DLLs to modify resources as the game loads them.   
 
-This is a experimental plugin, you should not use it in a region or city you care about.
-The logging will also slow down your game.
-
 The plugin can be downloaded from the Releases tab: https://github.com/0xC0000054/sc4-resource-loading-hooks/releases
 
 ## Technical Details
@@ -50,6 +47,7 @@ the following values:
 would log the TGI values of all 'Type 21' exemplars.
 
 The log will be written to a `SC4ExemplarLoad.log` file in the same folder as the plugin.
+The logging will also slow down your game.
 
 ## Troubleshooting
 
