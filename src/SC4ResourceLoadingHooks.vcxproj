@@ -41,7 +41,7 @@
     <ClCompile Include="child-directors\exemplar-load-logging\FileSystem.cpp" />
     <ClCompile Include="child-directors\exemplar-load-logging\FilteredExemplarLogger.cpp" />
     <ClCompile Include="ExemplarResourceFactoryProxy.cpp" />
-    <ClCompile Include="public\source\LogExemplarTGIDllDirector.cpp" />
+    <ClCompile Include="public\examples\LogExemplarTGIDllDirector.cpp" />
     <ClCompile Include="ResourceLoadingHooksDllDirector.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="ResourceFactoryProxy.cpp" />

@@ -159,7 +159,7 @@
     <ClCompile Include="child-directors\exemplar-load-logging\ExemplarLoggerBase.cpp">
       <Filter>Source Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
     </ClCompile>
-    <ClCompile Include="public\source\LogExemplarTGIDllDirector.cpp">
+    <ClCompile Include="public\examples\LogExemplarTGIDllDirector.cpp">
       <Filter>Source Files\Example Code</Filter>
     </ClCompile>
   </ItemGroup>

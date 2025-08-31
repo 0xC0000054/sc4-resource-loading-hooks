@@ -56,8 +56,14 @@ The log contains status information for the most recent run of the plugin.
 
 # License
 
-This project is licensed under the terms of the MIT License.    
+This project is licensed under the terms of the GNU Lesser General Public License version 3.0.    
 See [LICENSE.txt](LICENSE.txt) for more information.
+
+## Public GZCOM Interface Headers and Example Code
+
+The sub-folders of src/public contain the public interface headers for the GZCOM classes that this DLL
+provides and example code demonstrating their use.    
+These files are separately licensed under the terms of the MIT License (https://opensource.org/license/mit).   
 
 ## 3rd party code
 
