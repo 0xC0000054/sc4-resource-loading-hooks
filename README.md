@@ -67,9 +67,7 @@ These files are separately licensed under the terms of the MIT License (https://
 
 ## 3rd party code
 
-[gzcom-dll](https://github.com/nsgomez/gzcom-dll/tree/master) Located in the vendor folder, MIT License.    
-[EABase](https://github.com/electronicarts/EABase) Located in the vendor folder, BSD 3-Clause License.    
-[EASTL](https://github.com/electronicarts/EASTL) Located in the vendor folder, BSD 3-Clause License.    
+[gzcom-dll](https://github.com/nsgomez/gzcom-dll/tree/master) - MIT License.   
 [Windows Implementation Library](https://github.com/microsoft/wil) - MIT License    
 [Boost.Algorithm](https://www.boost.org/doc/libs/1_84_0/libs/algorithm/doc/html/index.html) - Boost Software License, Version 1.0.    
 
@@ -78,6 +76,8 @@ These files are separately licensed under the terms of the MIT License (https://
 ## Prerequisites
 
 * Visual Studio 2022
+* `git submodule update --init`
+* [VCPkg](https://github.com/microsoft/vcpkg) with the Visual Studio integration
 
 ## Building the plugin
 

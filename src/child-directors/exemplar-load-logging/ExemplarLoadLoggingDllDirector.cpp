@@ -38,9 +38,6 @@
 #include "wil/resource.h"
 #include "wil/win32_helpers.h"
 
-#include "EASTLConfigSC4.h"
-#include "EASTL\vector.h"
-
 static constexpr uint32_t kExemplarLoadLoggingDirectorID = 0xC6703C6C;
 
 using namespace std::string_view_literals;

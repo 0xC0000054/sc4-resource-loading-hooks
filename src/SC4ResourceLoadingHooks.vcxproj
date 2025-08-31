@@ -11,26 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\vendor\EASTL\source\assert.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\atomic.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\fixed_pool.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\hashtable.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\intrusive_list.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\numeric_limits.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\red_black_tree.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\string.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\thread_support.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cRZBaseString.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cRZBaseVariant.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cRZCOMDllDirector.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cRZMessage2.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cRZMessage2Standard.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cS3DVector3.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cSCBaseProperty.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\EASTLAllocatorSC4.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\SC4UI.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\SCPropertyUtil.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\StringResourceManager.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseString.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseVariant.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZCOMDllDirector.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2Standard.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cS3DVector3.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cSCBaseProperty.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SC4UI.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCPropertyUtil.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\StringResourceManager.cpp" />
     <ClCompile Include="child-directors\exemplar-load-logging\ExemplarErrorLogger.cpp" />
     <ClCompile Include="child-directors\exemplar-load-logging\ExemplarLoadLoggingDllDirector.cpp" />
     <ClCompile Include="child-directors\exemplar-load-logging\ExemplarLoggerBase.cpp" />
@@ -48,16 +38,16 @@
     <ClCompile Include="StringViewUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\vendor\gzcom-dll\include\cGZPersistResourceKey.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistDBRecord.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistResource.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistResourceFactory.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cIGZPersistResourceManager.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cISC4App.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\cRZCOMDllDirector.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\SCPropertyUtil.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\StringResourceKey.h" />
-    <ClInclude Include="..\vendor\gzcom-dll\include\StringResourceManager.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cGZPersistResourceKey.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cIGZPersistDBRecord.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cIGZPersistResource.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cIGZPersistResourceFactory.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cIGZPersistResourceManager.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cISC4App.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cRZCOMDllDirector.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\SCPropertyUtil.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\StringResourceKey.h" />
+    <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\StringResourceManager.h" />
     <ClInclude Include="child-directors\exemplar-load-logging\ExemplarErrorLogger.h" />
     <ClInclude Include="child-directors\exemplar-load-logging\ExemplarLoadLoggingDllDirector.h" />
     <ClInclude Include="child-directors\exemplar-load-logging\ExemplarLoggerBase.h" />
@@ -129,7 +119,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\include;..\vendor\EASTL\include;..\vendor\EABase\include\Common;.\;.\public\include;.\child-directors\exemplar-load-logging</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\child-directors\exemplar-load-logging</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -153,7 +143,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\include;..\vendor\EASTL\include;..\vendor\EABase\include\Common;.\;.\public\include;.\child-directors\exemplar-load-logging</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\child-directors\exemplar-load-logging</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
