@@ -37,7 +37,7 @@ public:
 
 	static Logger& GetInstance();
 
-	void Init(std::filesystem::path logFilePath, LogLevel level, bool includeTimeStamp = true);
+	void Init(std::filesystem::path logFilePath, LogLevel level);
 
 	bool IsEnabled(LogLevel option) const;
 
@@ -57,7 +57,6 @@ private:
 	void WriteLineCore(const char* const message);
 
 	bool initialized;
-	bool writeTimeStamp;
 	LogLevel logLevel;
 	std::ofstream logFile;
 };

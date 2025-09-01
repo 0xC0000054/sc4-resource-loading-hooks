@@ -100,7 +100,7 @@ public:
 		logFilePath /= PluginLogFileName;
 
 		Logger& logger = Logger::GetInstance();
-		logger.Init(logFilePath, LogLevel::Info, false);
+		logger.Init(logFilePath, LogLevel::Info);
 		logger.WriteLogFileHeader("SC4ResourceLoadingHooks v" PLUGIN_VERSION_STR);
 	}
 
