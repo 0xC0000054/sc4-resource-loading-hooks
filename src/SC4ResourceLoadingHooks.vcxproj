@@ -30,11 +30,11 @@
     <ClCompile Include="child-directors\exemplar-load-logging\ExemplarTypes.cpp" />
     <ClCompile Include="child-directors\exemplar-load-logging\FileSystem.cpp" />
     <ClCompile Include="child-directors\exemplar-load-logging\FilteredExemplarLogger.cpp" />
-    <ClCompile Include="ExemplarResourceFactoryProxy.cpp" />
     <ClCompile Include="public\examples\LogExemplarTGIDllDirector.cpp" />
+    <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.cpp" />
+    <ClCompile Include="resource-factory-proxies\ResourceFactoryProxy.cpp" />
     <ClCompile Include="ResourceLoadingHooksDllDirector.cpp" />
     <ClCompile Include="Logger.cpp" />
-    <ClCompile Include="ResourceFactoryProxy.cpp" />
     <ClCompile Include="StringViewUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -57,12 +57,12 @@
     <ClInclude Include="child-directors\exemplar-load-logging\ExemplarTypes.h" />
     <ClInclude Include="child-directors\exemplar-load-logging\FileSystem.h" />
     <ClInclude Include="child-directors\exemplar-load-logging\FilteredExemplarLogger.h" />
-    <ClInclude Include="ExemplarResourceFactoryProxy.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="public\include\cIExemplarLoadErrorHookTarget.h" />
     <ClInclude Include="public\include\cIExemplarLoadHookServer.h" />
     <ClInclude Include="public\include\cIExemplarLoadHookTarget.h" />
-    <ClInclude Include="ResourceFactoryProxy.h" />
+    <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.h" />
+    <ClInclude Include="resource-factory-proxies\ResourceFactoryProxy.h" />
     <ClInclude Include="StringViewUtil.h" />
     <ClInclude Include="version.h" />
   </ItemGroup>
@@ -119,7 +119,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\child-directors\exemplar-load-logging</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\child-directors\exemplar-load-logging;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -143,7 +143,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\child-directors\exemplar-load-logging</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\child-directors\exemplar-load-logging;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>

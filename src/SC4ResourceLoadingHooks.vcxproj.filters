@@ -52,6 +52,9 @@
     <Filter Include="Source Files\Example Code">
       <UniqueIdentifier>{89cd7182-54d9-4ffd-bb87-03a2d88326a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Resource Factory Proxy\Exemplar">
+      <UniqueIdentifier>{2e44a2d7-7a54-4a1e-b751-f6088f68f26e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cpp">
@@ -90,12 +93,6 @@
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCPropertyUtil.cpp">
       <Filter>Source Files\GZCOM</Filter>
     </ClCompile>
-    <ClCompile Include="ExemplarResourceFactoryProxy.cpp">
-      <Filter>Source Files\Resource Factory Proxy</Filter>
-    </ClCompile>
-    <ClCompile Include="ResourceFactoryProxy.cpp">
-      <Filter>Source Files\Resource Factory Proxy</Filter>
-    </ClCompile>
     <ClCompile Include="StringViewUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -128,6 +125,12 @@
     </ClCompile>
     <ClCompile Include="public\examples\LogExemplarTGIDllDirector.cpp">
       <Filter>Source Files\Example Code</Filter>
+    </ClCompile>
+    <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.cpp">
+      <Filter>Source Files\Resource Factory Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="resource-factory-proxies\ResourceFactoryProxy.cpp">
+      <Filter>Source Files\Resource Factory Proxy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -163,12 +166,6 @@
     </ClInclude>
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\SCPropertyUtil.h">
       <Filter>Header Files\GZCOM</Filter>
-    </ClInclude>
-    <ClInclude Include="ResourceFactoryProxy.h">
-      <Filter>Header Files\Resource Factory Proxy</Filter>
-    </ClInclude>
-    <ClInclude Include="ExemplarResourceFactoryProxy.h">
-      <Filter>Header Files\Resource Factory Proxy</Filter>
     </ClInclude>
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\cRZCOMDllDirector.h">
       <Filter>Header Files\GZCOM</Filter>
@@ -211,6 +208,12 @@
     </ClInclude>
     <ClInclude Include="public\include\cIExemplarLoadHookServer.h">
       <Filter>Header Files\Public Headers\Exemplar</Filter>
+    </ClInclude>
+    <ClInclude Include="resource-factory-proxies\ResourceFactoryProxy.h">
+      <Filter>Header Files\Resource Factory Proxy</Filter>
+    </ClInclude>
+    <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.h">
+      <Filter>Header Files\Resource Factory Proxy\Exemplar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
