@@ -26,8 +26,6 @@
 
 // This class is a GZCOM DLL that logs the TGI of every exemplar the game loads
 // to the debugger console.
-// It is a simplified version of the code in ExemplarLoadLoggingDllDirector.cpp
-
 
 #include "cIGZCOM.h"
 #include "cIGZFrameWork.h"

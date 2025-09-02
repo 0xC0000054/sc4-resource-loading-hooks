@@ -31,24 +31,6 @@
     <Filter Include="Header Files\Public Headers\Exemplar">
       <UniqueIdentifier>{ec51c238-6f6b-4ed6-9d60-25e55a589358}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Child Directors">
-      <UniqueIdentifier>{1c679b13-9a58-4d2b-8c72-79fd25b2481f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Child Directors">
-      <UniqueIdentifier>{2a6e3443-9bd4-4727-a49e-aece63029b2e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Child Directors\Exemplar Load Logging">
-      <UniqueIdentifier>{dce73cf6-68b7-4260-94c5-c0b73aae2092}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Child Directors\Exemplar Load Logging">
-      <UniqueIdentifier>{42a7dc2e-2516-4ca0-9b00-4b92d1d33e04}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Child Directors\Exemplar Load Logging\Loggers">
-      <UniqueIdentifier>{28178551-715e-4456-8617-09af5ada7ae1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Child Directors\Exemplar Load Logging\Loggers">
-      <UniqueIdentifier>{1e834546-1fc5-42fe-8b99-694bf7ce6ebc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Example Code">
       <UniqueIdentifier>{89cd7182-54d9-4ffd-bb87-03a2d88326a4}</UniqueIdentifier>
     </Filter>
@@ -57,6 +39,18 @@
     </Filter>
     <Filter Include="Source Files\Resource Factory Proxy\Exemplar">
       <UniqueIdentifier>{385b8306-dc77-4adb-9a83-648232083318}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Exemplar Load Logging">
+      <UniqueIdentifier>{325ea5f1-09b9-4fd0-bbb6-8285d112e5ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Exemplar Load Logging\Loggers">
+      <UniqueIdentifier>{3eb13d69-a9d8-4757-9253-c6647b32fd16}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Exemplar Load Logging">
+      <UniqueIdentifier>{42a7dc2e-2516-4ca0-9b00-4b92d1d33e04}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Exemplar Load Logging\Loggers">
+      <UniqueIdentifier>{28178551-715e-4456-8617-09af5ada7ae1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -99,33 +93,6 @@
     <ClCompile Include="StringViewUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarLoadLoggingDllDirector.cpp">
-      <Filter>Source Files\Child Directors\Exemplar Load Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarTypes.cpp">
-      <Filter>Source Files\Child Directors\Exemplar Load Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarResourceLoggerBase.cpp">
-      <Filter>Source Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClCompile>
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarTGILogger.cpp">
-      <Filter>Source Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClCompile>
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarTypeLogger.cpp">
-      <Filter>Source Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClCompile>
-    <ClCompile Include="child-directors\exemplar-load-logging\FilteredExemplarLogger.cpp">
-      <Filter>Source Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClCompile>
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarErrorLogger.cpp">
-      <Filter>Source Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClCompile>
-    <ClCompile Include="child-directors\exemplar-load-logging\FileSystem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarLoggerBase.cpp">
-      <Filter>Source Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClCompile>
     <ClCompile Include="public\examples\LogExemplarTGIDllDirector.cpp">
       <Filter>Source Files\Example Code</Filter>
     </ClCompile>
@@ -146,6 +113,33 @@
     </ClCompile>
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseUnknown.cpp">
       <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarErrorLogger.cpp">
+      <Filter>Source Files\Exemplar Load Logging\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarLoggerBase.cpp">
+      <Filter>Source Files\Exemplar Load Logging\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarResourceLoggerBase.cpp">
+      <Filter>Source Files\Exemplar Load Logging\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarTGILogger.cpp">
+      <Filter>Source Files\Exemplar Load Logging\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarTypeLogger.cpp">
+      <Filter>Source Files\Exemplar Load Logging\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="exemplar-load-logging\Loggers\FilteredExemplarLogger.cpp">
+      <Filter>Source Files\Exemplar Load Logging\Loggers</Filter>
+    </ClCompile>
+    <ClCompile Include="exemplar-load-logging\ExemplarLoadLogger.cpp">
+      <Filter>Source Files\Exemplar Load Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="exemplar-load-logging\ExemplarTypes.cpp">
+      <Filter>Source Files\Exemplar Load Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="FileSystem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -188,33 +182,6 @@
     <ClInclude Include="StringViewUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarLoadLoggingDllDirector.h">
-      <Filter>Header Files\Child Directors\Exemplar Load Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarTypes.h">
-      <Filter>Header Files\Child Directors\Exemplar Load Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarErrorLogger.h">
-      <Filter>Header Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClInclude>
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarTGILogger.h">
-      <Filter>Header Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClInclude>
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarTypeLogger.h">
-      <Filter>Header Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClInclude>
-    <ClInclude Include="child-directors\exemplar-load-logging\FilteredExemplarLogger.h">
-      <Filter>Header Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClInclude>
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarResourceLoggerBase.h">
-      <Filter>Header Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClInclude>
-    <ClInclude Include="child-directors\exemplar-load-logging\FileSystem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarLoggerBase.h">
-      <Filter>Header Files\Child Directors\Exemplar Load Logging\Loggers</Filter>
-    </ClInclude>
     <ClInclude Include="public\include\cIExemplarLoadHookTarget.h">
       <Filter>Header Files\Public Headers\Exemplar</Filter>
     </ClInclude>
@@ -235,6 +202,33 @@
     </ClInclude>
     <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarPatcher.h">
       <Filter>Header Files\Resource Factory Proxy\Exemplar</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarErrorLogger.h">
+      <Filter>Header Files\Exemplar Load Logging\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarLoggerBase.h">
+      <Filter>Header Files\Exemplar Load Logging\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarResourceLoggerBase.h">
+      <Filter>Header Files\Exemplar Load Logging\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarTGILogger.h">
+      <Filter>Header Files\Exemplar Load Logging\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarTypeLogger.h">
+      <Filter>Header Files\Exemplar Load Logging\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-load-logging\Loggers\FilteredExemplarLogger.h">
+      <Filter>Header Files\Exemplar Load Logging\Loggers</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-load-logging\ExemplarTypes.h">
+      <Filter>Header Files\Exemplar Load Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-load-logging\ExemplarLoadLogger.h">
+      <Filter>Header Files\Exemplar Load Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="FileSystem.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

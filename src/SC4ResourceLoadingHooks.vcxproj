@@ -24,15 +24,15 @@
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SC4UI.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCPropertyUtil.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\StringResourceManager.cpp" />
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarErrorLogger.cpp" />
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarLoadLoggingDllDirector.cpp" />
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarLoggerBase.cpp" />
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarResourceLoggerBase.cpp" />
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarTGILogger.cpp" />
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarTypeLogger.cpp" />
-    <ClCompile Include="child-directors\exemplar-load-logging\ExemplarTypes.cpp" />
-    <ClCompile Include="child-directors\exemplar-load-logging\FileSystem.cpp" />
-    <ClCompile Include="child-directors\exemplar-load-logging\FilteredExemplarLogger.cpp" />
+    <ClCompile Include="exemplar-load-logging\ExemplarLoadLogger.cpp" />
+    <ClCompile Include="exemplar-load-logging\ExemplarTypes.cpp" />
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarErrorLogger.cpp" />
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarLoggerBase.cpp" />
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarResourceLoggerBase.cpp" />
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarTGILogger.cpp" />
+    <ClCompile Include="exemplar-load-logging\Loggers\ExemplarTypeLogger.cpp" />
+    <ClCompile Include="exemplar-load-logging\Loggers\FilteredExemplarLogger.cpp" />
+    <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="public\examples\LogExemplarTGIDllDirector.cpp" />
     <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarPatcher.cpp" />
     <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.cpp" />
@@ -52,15 +52,15 @@
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\SCPropertyUtil.h" />
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\StringResourceKey.h" />
     <ClInclude Include="..\vendor\gzcom-dll\gzcom-dll\include\StringResourceManager.h" />
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarErrorLogger.h" />
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarLoadLoggingDllDirector.h" />
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarLoggerBase.h" />
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarResourceLoggerBase.h" />
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarTGILogger.h" />
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarTypeLogger.h" />
-    <ClInclude Include="child-directors\exemplar-load-logging\ExemplarTypes.h" />
-    <ClInclude Include="child-directors\exemplar-load-logging\FileSystem.h" />
-    <ClInclude Include="child-directors\exemplar-load-logging\FilteredExemplarLogger.h" />
+    <ClInclude Include="exemplar-load-logging\ExemplarLoadLogger.h" />
+    <ClInclude Include="exemplar-load-logging\ExemplarTypes.h" />
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarErrorLogger.h" />
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarLoggerBase.h" />
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarResourceLoggerBase.h" />
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarTGILogger.h" />
+    <ClInclude Include="exemplar-load-logging\Loggers\ExemplarTypeLogger.h" />
+    <ClInclude Include="exemplar-load-logging\Loggers\FilteredExemplarLogger.h" />
+    <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="public\include\cIExemplarLoadErrorHookTarget.h" />
     <ClInclude Include="public\include\cIExemplarLoadHookServer.h" />
@@ -125,7 +125,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\child-directors\exemplar-load-logging;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -149,7 +149,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\child-directors\exemplar-load-logging;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>

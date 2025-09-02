@@ -22,7 +22,7 @@
 #include "version.h"
 #include "FileSystem.h"
 #include "Logger.h"
-#include "ExemplarLoadLoggingDllDirector.h"
+#include "ExemplarLoadLogger.h"
 #include "ExemplarResourceFactoryProxy.h"
 #include "cIGZApp.h"
 #include "cIGZCmdLine.h"
@@ -90,10 +90,6 @@ public:
 		AddCls(GZCLSID_ExemplarFactoryProxy, CreateExemplarResourceProxy);
 		AddCls(GZCLSID_cIExemplarLoadHookServer, CreateExemplarLoadHookServer);
 
-		// A child director that is used to test the services provided by
-		// this director.
-		AddDirector(&exemplarLoadLoggingDirector);
-
 		std::filesystem::path dllFolderPath = FileSystem::GetDllFolderPath();
 
 		std::filesystem::path logFilePath = dllFolderPath;
@@ -136,10 +132,6 @@ public:
 	{
 		RegisterResourceFactoryProxies();
 
-		// The resource factory proxies must be registered before starting the
-		// child DLL directors because they will add listeners in OnStart.
-		exemplarLoadLoggingDirector.OnStart(pCOM);
-
 		mpFrameWork->AddHook(this);
 
 		return true;
@@ -154,6 +146,7 @@ public:
 		if (pCmdLine)
 		{
 			exemplarPatchDebugLoggingEnabled = pCmdLine->IsSwitchPresent(cRZBaseString("exemplar-patch-debug-logging"));
+			exemplarLoadLogger.Init(*pCmdLine, mpCOM);
 		}
 
 		// The ExemplarResourceFactoryProxy interface is implemented by the resource factory proxy.
@@ -182,7 +175,7 @@ public:
 
 private:
 
-	ExemplarLoadLoggingDllDirector exemplarLoadLoggingDirector;
+	ExemplarLoadLogger exemplarLoadLogger;
 };
 
 cRZCOMDllDirector* RZGetCOMDllDirector() {

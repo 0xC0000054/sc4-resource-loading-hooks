@@ -1,16 +1,25 @@
-///////////////////////////////////////////////////////////////////////////////
-//
-// This file is part of sc4-resource-loading-hooks, a DLL Plugin for SimCity 4
-// that allows other DLLs to modify resources as the game loads them.
-//
-// Copyright (c) 2024 Nicholas Hayes
-//
-// This file is licensed under terms of the MIT License.
-// See LICENSE.txt for more information.
-//
-///////////////////////////////////////////////////////////////////////////////
+/*
+ * This file is part of sc4-resource-loading-hooks, a DLL Plugin for SimCity 4
+ * that allows other DLLs to modify resources as the game loads them.
+ *
+ * Copyright (C) 2024, 2025 Nicholas Hayes
+ *
+ * sc4-resource-loading-hooks is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of
+ * the License, or (at your option) any later version.
+ *
+ * sc4-resource-loading-hooks is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with sc4-resource-loading-hooks.
+ * If not, see <http://www.gnu.org/licenses/>.
+ */
 
-#include "ExemplarLoadLoggingDllDirector.h"
+#include "ExemplarLoadLogger.h"
 #include "FileSystem.h"
 #include "Logger.h"
 #include "ExemplarErrorLogger.h"
@@ -44,7 +53,8 @@ using namespace std::string_view_literals;
 
 static constexpr std::string_view PluginLogFileName = "SC4ExemplarLoad.log"sv;
 
-ExemplarLoadLoggingDllDirector::ExemplarLoadLoggingDllDirector()
+ExemplarLoadLogger::ExemplarLoadLogger()
+	: refCount(0)
 {
 	std::filesystem::path dllFolderPath = FileSystem::GetDllFolderPath();
 
@@ -52,7 +62,7 @@ ExemplarLoadLoggingDllDirector::ExemplarLoadLoggingDllDirector()
 	logFilePath /= PluginLogFileName;
 }
 
-bool ExemplarLoadLoggingDllDirector::QueryInterface(uint32_t riid, void** ppvObj)
+bool ExemplarLoadLogger::QueryInterface(uint32_t riid, void** ppvObj)
 {
 	if (riid == GZIID_cIExemplarLoadHookTarget)
 	{
@@ -68,38 +78,37 @@ bool ExemplarLoadLoggingDllDirector::QueryInterface(uint32_t riid, void** ppvObj
 
 		return true;
 	}
+	else if (riid == GZIID_cIGZUnknown)
+	{
+		*ppvObj = static_cast<cIGZUnknown*>(static_cast<cIExemplarLoadErrorHookTarget*>(this));
+		AddRef();
 
-	return cRZCOMDllDirector::QueryInterface(riid, ppvObj);
+		return true;
+	}
+
+	*ppvObj = nullptr;
+	return false;
 }
 
-uint32_t ExemplarLoadLoggingDllDirector::AddRef()
+uint32_t ExemplarLoadLogger::AddRef()
 {
-	return cRZCOMDllDirector::AddRef();
+	return ++refCount;
 }
 
-uint32_t ExemplarLoadLoggingDllDirector::Release()
+uint32_t ExemplarLoadLogger::Release()
 {
-	return cRZCOMDllDirector::Release();
+	return refCount;
 }
 
-uint32_t ExemplarLoadLoggingDllDirector::GetDirectorID() const
+void ExemplarLoadLogger::Init(const cIGZCmdLine& cmdLine, cIGZCOM* pCOM)
 {
-	return kExemplarLoadLoggingDirectorID;
-}
-
-bool ExemplarLoadLoggingDllDirector::OnStart(cIGZCOM* pCOM)
-{
-	cIGZFrameWork* const pFramework = pCOM->FrameWork();
-
-	const cIGZCmdLine* pCmdLine = pFramework->CommandLine();
-
 	cRZBaseString value;
 
-	if (pCmdLine->IsSwitchPresent(cRZBaseString("exemplar-log"), value, true))
+	if (cmdLine.IsSwitchPresent(cRZBaseString("exemplar-log"), value, true))
 	{
 		SetLoggerFromCommandLine(value.ToChar());
 
-		if (exemplarLogger)
+		if (exemplarLogger && pCOM)
 		{
 			// We can put the cIExemplarLoadHookServer GetClassObject call in OnStart because this class
 			// is a child director of ResourceLoadingHooksDllDirector, it will call our OnStart after it
@@ -130,11 +139,9 @@ bool ExemplarLoadLoggingDllDirector::OnStart(cIGZCOM* pCOM)
 			}
 		}
 	}
-
-	return true;
 }
 
-void ExemplarLoadLoggingDllDirector::ExemplarLoaded(
+void ExemplarLoadLogger::ExemplarLoaded(
 	const char* const originalFunctionName,
 	const cGZPersistResourceKey& key,
 	cISCResExemplar* resExemplar)
@@ -145,7 +152,7 @@ void ExemplarLoadLoggingDllDirector::ExemplarLoaded(
 		resExemplar);
 }
 
-void ExemplarLoadLoggingDllDirector::LoadError(
+void ExemplarLoadLogger::LoadError(
 	const char* const originalFunctionName,
 	uint32_t riid)
 {
@@ -154,7 +161,7 @@ void ExemplarLoadLoggingDllDirector::LoadError(
 		riid);
 }
 
-void ExemplarLoadLoggingDllDirector::LoadError(
+void ExemplarLoadLogger::LoadError(
 	const char* const originalFunctionName,
 	uint32_t riid,
 	const cGZPersistResourceKey& key)
@@ -165,7 +172,7 @@ void ExemplarLoadLoggingDllDirector::LoadError(
 		key);
 }
 
-void ExemplarLoadLoggingDllDirector::SetLoggerFromCommandLine(const std::string_view& argName)
+void ExemplarLoadLogger::SetLoggerFromCommandLine(const std::string_view& argName)
 {
 	if (StringViewUtil::EqualsIgnoreCase(argName, "error"sv))
 	{
