@@ -22,6 +22,8 @@
 #pragma once
 #include "ResourceFactoryProxy.h"
 #include "cIExemplarLoadHookServer.h"
+#include "ExemplarPatcher.h"
+#include "IExemplarResourceFactoryProxy.h"
 #include <unordered_map>
 #include <unordered_set>
 
@@ -30,15 +32,20 @@ static constexpr uint32_t ExemplarTypeID = 0x6534284A;
 
 class ExemplarResourceFactoryProxy final :
 	public ResourceFactoryProxy,
-	private cIExemplarLoadHookServer
+	private cIExemplarLoadHookServer,
+	private IExemplarResourceFactoryProxy
 {
 public:
 
 	ExemplarResourceFactoryProxy();
 
+	// cIGZUnknown
+
 	bool QueryInterface(uint32_t riid, void** ppvObj) override;
 	uint32_t AddRef() override;
 	uint32_t Release() override;
+
+	// cIExemplarLoadHookServer
 
 	bool AddLoadNotification(cIExemplarLoadHookTarget* target) override;
 	bool AddLoadNotification(
@@ -51,6 +58,10 @@ public:
 
 	bool AddLoadErrorNotification(cIExemplarLoadErrorHookTarget* target) override;
 	bool RemoveLoadErrorNotification(cIExemplarLoadErrorHookTarget* target) override;
+
+	// IExemplarResourceFactoryProxy
+
+	void InitializeExemplarPatchData(bool debugLoggingEnabled) override;
 
 private:
 
@@ -84,5 +95,6 @@ private:
 
 	std::unordered_map<cIExemplarLoadHookTarget*, ExemplarTGIFilter> exemplarLoadTargets;
 	std::unordered_set<cIExemplarLoadErrorHookTarget*> exemplarLoadErrorTargets;
+	ExemplarPatcher exemplarPatcher;
 };
 

@@ -38,7 +38,14 @@ bool ExemplarResourceFactoryProxy::QueryInterface(uint32_t riid, void** ppvObj)
 	if (riid == GZIID_cIExemplarLoadHookServer)
 	{
 		*ppvObj = static_cast<cIExemplarLoadHookServer*>(this);
-		ResourceFactoryProxy::AddRef();
+		AddRef();
+
+		return true;
+	}
+	else if (riid == GZIID_IExemplarResourceFactoryProxy)
+	{
+		*ppvObj = static_cast<IExemplarResourceFactoryProxy*>(this);
+		AddRef();
 
 		return true;
 	}
@@ -121,14 +128,18 @@ bool ExemplarResourceFactoryProxy::RemoveLoadErrorNotification(cIExemplarLoadErr
 	return result;
 }
 
+void ExemplarResourceFactoryProxy::InitializeExemplarPatchData(bool debugLoggingEnabled)
+{
+	exemplarPatcher.SetDebugLoggingEnabled(debugLoggingEnabled);
+	exemplarPatcher.LoadExemplarPatches();
+}
+
 void ExemplarResourceFactoryProxy::ResourceLoaded(
 	const char* const originalFunctionName,
 	uint32_t riid,
 	void** ppvObj)
 {
-	if (exemplarLoadTargets.size() > 0
-		&& riid == GZIID_cIGZPersistResource
-		&& *ppvObj)
+	if (riid == GZIID_cIGZPersistResource && *ppvObj)
 	{
 		cIGZPersistResource* pRes = static_cast<cIGZPersistResource*>(*ppvObj);
 		cGZPersistResourceKey key;
@@ -138,14 +149,19 @@ void ExemplarResourceFactoryProxy::ResourceLoaded(
 
 		if (pRes->QueryInterface(GZIID_cISCResExemplar, resExemplar.AsPPVoid()))
 		{
-			for (const auto& item : exemplarLoadTargets)
-			{
-				cIExemplarLoadHookTarget* const temp = item.first;
-				const ExemplarTGIFilter& filter = item.second;
+			exemplarPatcher.ApplyPatches(key, resExemplar);
 
-				if (temp && filter.IsIncluded(key))
+			if (exemplarLoadTargets.size() > 0)
+			{
+				for (const auto& item : exemplarLoadTargets)
 				{
-					temp->ExemplarLoaded(originalFunctionName, key, resExemplar);
+					cIExemplarLoadHookTarget* const temp = item.first;
+					const ExemplarTGIFilter& filter = item.second;
+
+					if (temp && filter.IsIncluded(key))
+					{
+						temp->ExemplarLoaded(originalFunctionName, key, resExemplar);
+					}
 				}
 			}
 		}

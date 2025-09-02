@@ -140,6 +140,43 @@ public:
 		// child DLL directors because they will add listeners in OnStart.
 		exemplarLoadLoggingDirector.OnStart(pCOM);
 
+		mpFrameWork->AddHook(this);
+
+		return true;
+	}
+
+	bool PostAppInit()
+	{
+		bool exemplarPatchDebugLoggingEnabled = false;
+
+		cIGZCmdLine* pCmdLine = mpFrameWork->CommandLine();
+
+		if (pCmdLine)
+		{
+			exemplarPatchDebugLoggingEnabled = pCmdLine->IsSwitchPresent(cRZBaseString("exemplar-patch-debug-logging"));
+		}
+
+		// The ExemplarResourceFactoryProxy interface is implemented by the resource factory proxy.
+		// Grab a reference to the resource factory proxy instance that the game's
+		// resource manager created and call QueryInterface on it.
+
+		cIGZPersistResourceManagerPtr pResMan;
+
+		if (pResMan)
+		{
+			cRZAutoRefCount<cIGZPersistResourceFactory> pFactory;
+
+			if (pResMan->FindObjectFactory(ExemplarTypeID, pFactory.AsPPObj()))
+			{
+				cRZAutoRefCount<IExemplarResourceFactoryProxy> pProxy;
+
+				if (pFactory->QueryInterface(GZIID_IExemplarResourceFactoryProxy, pProxy.AsPPVoid()))
+				{
+					pProxy->InitializeExemplarPatchData(exemplarPatchDebugLoggingEnabled);
+				}
+			}
+		}
+
 		return true;
 	}
 

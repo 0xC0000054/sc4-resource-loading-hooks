@@ -12,12 +12,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseString.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseUnknown.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseVariant.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZCOMDllDirector.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2Standard.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cS3DVector3.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cSCBaseProperty.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterBase.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterByTypeAndGroup.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SC4UI.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\SCPropertyUtil.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\StringResourceManager.cpp" />
@@ -31,6 +34,7 @@
     <ClCompile Include="child-directors\exemplar-load-logging\FileSystem.cpp" />
     <ClCompile Include="child-directors\exemplar-load-logging\FilteredExemplarLogger.cpp" />
     <ClCompile Include="public\examples\LogExemplarTGIDllDirector.cpp" />
+    <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarPatcher.cpp" />
     <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.cpp" />
     <ClCompile Include="resource-factory-proxies\ResourceFactoryProxy.cpp" />
     <ClCompile Include="ResourceLoadingHooksDllDirector.cpp" />
@@ -61,7 +65,9 @@
     <ClInclude Include="public\include\cIExemplarLoadErrorHookTarget.h" />
     <ClInclude Include="public\include\cIExemplarLoadHookServer.h" />
     <ClInclude Include="public\include\cIExemplarLoadHookTarget.h" />
+    <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarPatcher.h" />
     <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.h" />
+    <ClInclude Include="resource-factory-proxies\Exemplar\IExemplarResourceFactoryProxy.h" />
     <ClInclude Include="resource-factory-proxies\ResourceFactoryProxy.h" />
     <ClInclude Include="StringViewUtil.h" />
     <ClInclude Include="version.h" />

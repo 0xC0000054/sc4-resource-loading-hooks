@@ -55,6 +55,9 @@
     <Filter Include="Header Files\Resource Factory Proxy\Exemplar">
       <UniqueIdentifier>{2e44a2d7-7a54-4a1e-b751-f6088f68f26e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Resource Factory Proxy\Exemplar">
+      <UniqueIdentifier>{385b8306-dc77-4adb-9a83-648232083318}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cpp">
@@ -126,11 +129,23 @@
     <ClCompile Include="public\examples\LogExemplarTGIDllDirector.cpp">
       <Filter>Source Files\Example Code</Filter>
     </ClCompile>
-    <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.cpp">
-      <Filter>Source Files\Resource Factory Proxy</Filter>
-    </ClCompile>
     <ClCompile Include="resource-factory-proxies\ResourceFactoryProxy.cpp">
       <Filter>Source Files\Resource Factory Proxy</Filter>
+    </ClCompile>
+    <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.cpp">
+      <Filter>Source Files\Resource Factory Proxy\Exemplar</Filter>
+    </ClCompile>
+    <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarPatcher.cpp">
+      <Filter>Source Files\Resource Factory Proxy\Exemplar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterBase.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterByTypeAndGroup.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseUnknown.cpp">
+      <Filter>Source Files\GZCOM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +228,12 @@
       <Filter>Header Files\Resource Factory Proxy</Filter>
     </ClInclude>
     <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.h">
+      <Filter>Header Files\Resource Factory Proxy\Exemplar</Filter>
+    </ClInclude>
+    <ClInclude Include="resource-factory-proxies\Exemplar\IExemplarResourceFactoryProxy.h">
+      <Filter>Header Files\Resource Factory Proxy\Exemplar</Filter>
+    </ClInclude>
+    <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarPatcher.h">
       <Filter>Header Files\Resource Factory Proxy\Exemplar</Filter>
     </ClInclude>
   </ItemGroup>
