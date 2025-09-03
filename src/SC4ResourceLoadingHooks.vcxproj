@@ -125,7 +125,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\frozen\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -149,7 +149,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\frozen\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>

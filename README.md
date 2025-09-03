@@ -109,6 +109,7 @@ These files are separately licensed under the terms of the MIT License (https://
 [Boost.Algorithm](https://www.boost.org/library/latest/algorithm/) - Boost Software License, Version 1.0.    
 [Boost.Container](https://www.boost.org/library/latest/container/) - Boost Software License, Version 1.0.    
 [Boost.Unordered](https://www.boost.org/library/latest/unordered/) - Boost Software License, Version 1.0.    
+[Frozen](https://github.com/serge-sans-paille/frozen) - Apache 2.0 License.    
 [submenus-dll](https://github.com/memo33/submenus-dll) - GNU Lesser General Public License version 3.0
 
 The Exemplar Patching code and documentation is based on the implementation in submenus-dll.

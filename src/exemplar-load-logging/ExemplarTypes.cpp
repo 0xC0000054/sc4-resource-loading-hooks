@@ -20,10 +20,11 @@
  */
 
 #include "ExemplarTypes.h"
+#include "frozen/unordered_map.h"
 #include "StringViewUtil.h"
 #include <charconv>
 
-static const std::map<uint32_t, std::string> ExemplarTypeMap
+static constexpr frozen::unordered_map<uint32_t, const char*, 37> ExemplarTypeMap
 {
 	{ 0x00000000, "Other/Unknown" },
 	{ 0x00000001, "Tuning" },
@@ -94,7 +95,7 @@ const char* const ExemplarTypes::GetExemplarTypeName(uint32_t type)
 
 	if (item != ExemplarTypeMap.end())
 	{
-		return item->second.c_str();
+		return item->second;
 	}
 
 	return "Unknown";
