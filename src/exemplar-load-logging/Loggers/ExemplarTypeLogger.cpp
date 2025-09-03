@@ -56,20 +56,22 @@ void ExemplarTypeLogger::ExemplarLoaded(
 			if (IsDebugLevel())
 			{
 				WriteLineFormatted(
-					"%s: T=0x%08X G=0x%08X, I=0x%08X, ExemplarType=%s",
+					"%s: T=0x%08X G=0x%08X, I=0x%08X, ExemplarType=0x%08X (%s)",
 					originalFunctionName,
 					key.type,
 					key.group,
 					key.instance,
+					exemplarType,
 					ExemplarTypes::GetExemplarTypeName(exemplarType));
 			}
 			else
 			{
 				WriteLineFormatted(
-					"T=0x%08X G=0x%08X, I=0x%08X, ExemplarType=%s",
+					"T=0x%08X G=0x%08X, I=0x%08X, ExemplarType=0x%08X (%s)",
 					key.type,
 					key.group,
 					key.instance,
+					exemplarType,
 					ExemplarTypes::GetExemplarTypeName(exemplarType));
 			}
 

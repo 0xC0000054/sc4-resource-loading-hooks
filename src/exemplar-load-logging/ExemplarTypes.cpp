@@ -108,11 +108,8 @@ bool ExemplarTypes::TryParseExemplarNumber(
 
 	if (TryParseNumber(value, outValue))
 	{
-		if (ExemplarTypeMap.contains(outValue))
-		{
-			exemplarType = outValue;
-			return true;
-		}
+		exemplarType = outValue;
+		return true;
 	}
 
 	exemplarType = 0;
