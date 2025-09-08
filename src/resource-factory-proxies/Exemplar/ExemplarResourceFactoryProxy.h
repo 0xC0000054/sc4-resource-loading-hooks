@@ -22,6 +22,7 @@
 #pragma once
 #include "ResourceFactoryProxy.h"
 #include "cIExemplarLoadHookServer.h"
+#include "cIExemplarPatchingServer.h"
 #include "ExemplarPatcher.h"
 #include "IExemplarResourceFactoryProxy.h"
 #include <unordered_map>
@@ -33,6 +34,7 @@ static constexpr uint32_t ExemplarTypeID = 0x6534284A;
 class ExemplarResourceFactoryProxy final :
 	public ResourceFactoryProxy,
 	private cIExemplarLoadHookServer,
+	private cIExemplarPatchingServer,
 	private IExemplarResourceFactoryProxy
 {
 public:
@@ -62,6 +64,10 @@ public:
 	// IExemplarResourceFactoryProxy
 
 	void InitializeExemplarPatchData(bool debugLoggingEnabled) override;
+
+	// cIExemplarPatchingServer
+
+	void ScanForExemplarPatches();
 
 private:
 

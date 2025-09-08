@@ -29,6 +29,8 @@
 #include "boost/container/deque.hpp"
 #include "boost/unordered/unordered_flat_map.hpp"
 
+#include <mutex>
+
 class ExemplarPatcher
 {
 public:
@@ -39,12 +41,13 @@ public:
 
 	void LoadExemplarPatches();
 
-	void ApplyPatches(const cGZPersistResourceKey& key, cISCResExemplar* pExemplar) const;
+	void ApplyPatches(const cGZPersistResourceKey& key, cISCResExemplar* pExemplar);
 
 	void SetDebugLoggingEnabled(bool enabled);
 
 private:
 
 	PatchContainer patches;
+	std::mutex mutex;
 	bool debugLoggingEnabled;
 };

@@ -55,26 +55,23 @@ static cIGZUnknown* CreateExemplarResourceProxy()
 	return static_cast<cIGZPersistResourceFactory*>(new ExemplarResourceFactoryProxy());
 }
 
-static bool CreateExemplarLoadHookServer(uint32_t riid, void** ppvObj)
+static bool QueryForExemplarResourceFactoryProxyInterface(uint32_t riid, void** ppvObj)
 {
 	bool result = false;
 
-	if (riid == GZIID_cIExemplarLoadHookServer)
+	// The interface is implemented by the exemplar resource factory proxy.
+	// Grab a reference to the exemplar resource factory proxy instance that
+	// the game's resource manager created and call QueryInterface on it.
+
+	cIGZPersistResourceManagerPtr pResMan;
+
+	if (pResMan)
 	{
-		// The load hook server interface is implemented by the resource factory proxy.
-		// Grab a reference to the resource factory proxy instance that the game's
-		// resource manager created and call QueryInterface on it.
+		cRZAutoRefCount<cIGZPersistResourceFactory> pFactory;
 
-		cIGZPersistResourceManagerPtr pResMan;
-
-		if (pResMan)
+		if (pResMan->FindObjectFactory(ExemplarTypeID, pFactory.AsPPObj()))
 		{
-			cRZAutoRefCount<cIGZPersistResourceFactory> pFactory;
-
-			if (pResMan->FindObjectFactory(ExemplarTypeID, pFactory.AsPPObj()))
-			{
-				result = pFactory->QueryInterface(riid, ppvObj);
-			}
+			result = pFactory->QueryInterface(riid, ppvObj);
 		}
 	}
 
@@ -88,7 +85,8 @@ public:
 	ResourceLoadingHooksDllDirector()
 	{
 		AddCls(GZCLSID_ExemplarFactoryProxy, CreateExemplarResourceProxy);
-		AddCls(GZCLSID_cIExemplarLoadHookServer, CreateExemplarLoadHookServer);
+		AddCls(GZCLSID_cIExemplarLoadHookServer, QueryForExemplarResourceFactoryProxyInterface);
+		AddCls(GZCLSID_cIExemplarPatchingServer, QueryForExemplarResourceFactoryProxyInterface);
 
 		std::filesystem::path dllFolderPath = FileSystem::GetDllFolderPath();
 
@@ -149,25 +147,18 @@ public:
 			exemplarLoadLogger.Init(*pCmdLine, mpCOM);
 		}
 
-		// The ExemplarResourceFactoryProxy interface is implemented by the resource factory proxy.
-		// Grab a reference to the resource factory proxy instance that the game's
-		// resource manager created and call QueryInterface on it.
+		cRZAutoRefCount<IExemplarResourceFactoryProxy> pProxy;
 
-		cIGZPersistResourceManagerPtr pResMan;
-
-		if (pResMan)
+		if (QueryForExemplarResourceFactoryProxyInterface(GZIID_IExemplarResourceFactoryProxy, pProxy.AsPPVoid()))
 		{
-			cRZAutoRefCount<cIGZPersistResourceFactory> pFactory;
-
-			if (pResMan->FindObjectFactory(ExemplarTypeID, pFactory.AsPPObj()))
-			{
-				cRZAutoRefCount<IExemplarResourceFactoryProxy> pProxy;
-
-				if (pFactory->QueryInterface(GZIID_IExemplarResourceFactoryProxy, pProxy.AsPPVoid()))
-				{
-					pProxy->InitializeExemplarPatchData(exemplarPatchDebugLoggingEnabled);
-				}
-			}
+			pProxy->InitializeExemplarPatchData(exemplarPatchDebugLoggingEnabled);
+		}
+		else
+		{
+			Logger& logger = Logger::GetInstance();
+			logger.WriteLine(
+				LogLevel::Error,
+				"Failed to initialize the exemplar patch system.");
 		}
 
 		return true;

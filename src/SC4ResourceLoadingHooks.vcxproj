@@ -65,6 +65,7 @@
     <ClInclude Include="public\include\cIExemplarLoadErrorHookTarget.h" />
     <ClInclude Include="public\include\cIExemplarLoadHookServer.h" />
     <ClInclude Include="public\include\cIExemplarLoadHookTarget.h" />
+    <ClInclude Include="public\include\cIExemplarPatchingServer.h" />
     <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarPatcher.h" />
     <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.h" />
     <ClInclude Include="resource-factory-proxies\Exemplar\IExemplarResourceFactoryProxy.h" />

@@ -239,6 +239,8 @@ ExemplarPatcher::ExemplarPatcher() : debugLoggingEnabled(false)
 
 void ExemplarPatcher::LoadExemplarPatches()
 {
+	std::lock_guard<std::mutex> guard(mutex);
+
 	cIGZPersistResourceManagerPtr pResMan;
 
 	if (pResMan)
@@ -256,7 +258,8 @@ void ExemplarPatcher::LoadExemplarPatches()
 
 			pResourceList->EnumKeys(ExemplarPatchScanCallback, &context);
 
-			std::swap(patches, context.patches);
+			patches.clear();
+			patches = std::move(context.patches);
 		}
 
 		Logger& logger = Logger::GetInstance();
@@ -287,9 +290,11 @@ void ExemplarPatcher::LoadExemplarPatches()
 	}
 }
 
-void ExemplarPatcher::ApplyPatches(const cGZPersistResourceKey& key, cISCResExemplar* pExemplar) const
+void ExemplarPatcher::ApplyPatches(const cGZPersistResourceKey& key, cISCResExemplar* pExemplar)
 {
-	auto item = patches.find(key);
+	std::lock_guard<std::mutex> guard(mutex);
+
+	const auto item = patches.find(key);
 
 	if (item != patches.end())
 	{

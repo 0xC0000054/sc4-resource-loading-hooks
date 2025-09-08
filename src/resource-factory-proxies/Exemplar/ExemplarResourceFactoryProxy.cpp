@@ -49,6 +49,13 @@ bool ExemplarResourceFactoryProxy::QueryInterface(uint32_t riid, void** ppvObj)
 
 		return true;
 	}
+	else if (riid == GZIID_cIExemplarPatchingServer)
+	{
+		*ppvObj = static_cast<cIExemplarPatchingServer*>(this);
+		AddRef();
+
+		return true;
+	}
 
 	return ResourceFactoryProxy::QueryInterface(riid, ppvObj);
 }
@@ -131,6 +138,11 @@ bool ExemplarResourceFactoryProxy::RemoveLoadErrorNotification(cIExemplarLoadErr
 void ExemplarResourceFactoryProxy::InitializeExemplarPatchData(bool debugLoggingEnabled)
 {
 	exemplarPatcher.SetDebugLoggingEnabled(debugLoggingEnabled);
+	exemplarPatcher.LoadExemplarPatches();
+}
+
+void ExemplarResourceFactoryProxy::ScanForExemplarPatches()
+{
 	exemplarPatcher.LoadExemplarPatches();
 }
 

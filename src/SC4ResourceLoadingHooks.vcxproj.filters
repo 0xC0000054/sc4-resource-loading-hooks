@@ -230,6 +230,9 @@
     <ClInclude Include="FileSystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="public\include\cIExemplarPatchingServer.h">
+      <Filter>Header Files\Public Headers\Exemplar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include=".editorconfig" />

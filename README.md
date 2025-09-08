@@ -40,12 +40,32 @@ Therefore, you should usually change the Instance ID whenever you copy an existi
 
 ## For DLL Developers
 
-1. Copy the headers from `src/public/include` folder into your GZCOM DLL project.
-2. Implement `cIExemplarLoadHookTarget` and/or `cIExemplarLoadErrorHookTarget` as additional interface(s) on
-your GZCOM DLL director.
-3. Register for the exemplar load and/or error notifications in `PreAppInit`.
+This DLL provides several GZCOM interfaces for use by other DLLs.
 
-See [LogExemplarTGIDllDirector.cpp](src/public/examples/LogExemplarTGIDllDirector.cpp) for an example implementation.    
+### cIExemplarLoadHookTarget
+
+This interface allows DLLs to modify exemplars when the game loads them or log exemplar loads.
+
+1. Copy the headers from `src/public/include` folder into your GZCOM DLL project.
+2. Implement `cIExemplarLoadHookTarget` as an additional interface on your GZCOM DLL director.
+3. Register for the exemplar load notifications in `PreAppInit`.
+
+See [LogExemplarTGIDllDirector.cpp](src/public/examples/LogExemplarTGIDllDirector.cpp) for an example implementation.  
+
+### cIExemplarLoadErrorHookTarget
+
+This interface allows DLLs to log exemplar load errors.
+
+1. Copy the headers from `src/public/include` folder into your GZCOM DLL project.
+2. Implement `cIExemplarErrorHookTarget` as an additional interface on your GZCOM DLL director.
+3. Register for the exemplar load error notifications in `PreAppInit`.
+
+### cIExemplarPatchingServer
+
+This interface allows DLLs that dynamically load DBPF plugin to request a new scan for exemplar patches.
+
+1. Copy the `cIExemplarPatchingServer.h` from `src/public/include` folder into your GZCOM DLL project.
+2. Create and instance of the interface and call the `ScanForExemplarPatches` method.
 
 ## System Requirements
 
