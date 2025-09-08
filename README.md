@@ -77,7 +77,7 @@ The plugin may work on Windows 7 or later with the [Microsoft Visual C++ 2022 x8
 ## Installation
 
 1. Close SimCity 4.
-2. Copy `SC4ResourceLoadingHooks.dll` into the Plugins folder in the SimCity 4 installation directory.
+2. Copy `SC4ResourceLoadingHooks.dll` into the top-level of the Plugins folder in the SimCity 4 installation directory or Documents/SimCity 4 directory.
 3. Start SimCity 4.
 
 ## Command Line Arguments
