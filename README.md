@@ -50,7 +50,7 @@ This interface allows DLLs to modify exemplars when the game loads them or log e
 2. Implement `cIExemplarLoadHookTarget` as an additional interface on your GZCOM DLL director.
 3. Register for the exemplar load notifications in `PreAppInit`.
 
-See [LogExemplarTGIDllDirector.cpp](src/public/examples/LogExemplarTGIDllDirector.cpp) for an example implementation.  
+See [LogExemplarTGIDllDirector.cpp](https://github.com/0xC0000054/sc4-resource-loading-hooks/blob/main/src/public/examples/LogExemplarTGIDllDirector.cpp) for an example implementation.  
 
 ### cIExemplarLoadErrorHookTarget
 
