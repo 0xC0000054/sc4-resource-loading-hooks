@@ -20,11 +20,12 @@
  */
 
 #pragma once
+#include "cRZBaseUnknown.h"
 #include "cIGZPersistResourceFactory.h"
 #include "cGZPersistResourceKey.h"
 #include "cRZAutoRefCount.h"
 
-class ResourceFactoryProxy : public cIGZPersistResourceFactory
+class ResourceFactoryProxy : public cRZBaseUnknown, public cIGZPersistResourceFactory
 {
 public:
 
@@ -72,7 +73,6 @@ private:
 	bool Write(cIGZPersistResource const& resource, cIGZPersistDBRecord& record) override;
 
 	uint32_t resourceTypeID;
-	uint32_t refCount;
 	cRZAutoRefCount<cIGZPersistResourceFactory> originalFactory;
 };
 

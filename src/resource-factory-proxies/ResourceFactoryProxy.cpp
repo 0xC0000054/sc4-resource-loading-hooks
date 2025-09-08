@@ -51,7 +51,9 @@ namespace
 
 ResourceFactoryProxy::ResourceFactoryProxy(uint32_t originalFactoryCLSID, uint32_t resourceTypeID)
 	: resourceTypeID(resourceTypeID),
-	  refCount(0),
+	  // CreateOriginalFactory returns a pointer that has already had its reference count incremented.
+	  // The cRZAutoRefCount<cIGZPersistResourceFactory>(cIGZPersistResourceFactory*) constructor
+	  // takes ownership of the pointer without modifying its reference count.
 	  originalFactory(CreateOriginalFactory(originalFactoryCLSID))
 {
 }
@@ -69,51 +71,18 @@ bool ResourceFactoryProxy::QueryInterface(uint32_t riid, void** ppvObj)
 
 		return true;
 	}
-	else if (riid == GZIID_cIGZUnknown)
-	{
-		*ppvObj = static_cast<cIGZUnknown*>(static_cast<cIGZPersistResourceFactory*>(this));
-		AddRef();
 
-		return true;
-	}
-
-	*ppvObj = nullptr;
-	return false;
+	return cRZBaseUnknown::QueryInterface(riid, ppvObj);
 }
 
 uint32_t ResourceFactoryProxy::AddRef()
 {
-	originalFactory->AddRef();
-
-	++refCount;
-
-	originalFactory->Release();
-
-	return refCount;
+	return cRZBaseUnknown::AddRef();
 }
 
 uint32_t ResourceFactoryProxy::Release()
 {
-	uint32_t localRefCount = 0;
-
-	originalFactory->AddRef();
-
-	if (refCount == 1)
-	{
-		originalFactory->Release();
-
-		delete this;
-		localRefCount = 0;
-	}
-	else
-	{
-		localRefCount = refCount - 1;
-		refCount = localRefCount;
-
-		originalFactory->Release();
-	}
-
-	return localRefCount;
+	return cRZBaseUnknown::Release();
 }
 
 bool ResourceFactoryProxy::CreateInstance(
