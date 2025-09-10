@@ -239,7 +239,7 @@ ExemplarPatcher::ExemplarPatcher() : debugLoggingEnabled(false)
 
 void ExemplarPatcher::LoadExemplarPatches()
 {
-	std::lock_guard<std::mutex> guard(mutex);
+	auto guard = sync.lock();
 
 	cIGZPersistResourceManagerPtr pResMan;
 
@@ -292,7 +292,7 @@ void ExemplarPatcher::LoadExemplarPatches()
 
 void ExemplarPatcher::ApplyPatches(const cGZPersistResourceKey& key, cISCResExemplar* pExemplar)
 {
-	std::lock_guard<std::mutex> guard(mutex);
+	auto guard = sync.lock();
 
 	const auto item = patches.find(key);
 

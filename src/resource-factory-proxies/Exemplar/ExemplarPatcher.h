@@ -29,7 +29,7 @@
 #include "boost/container/deque.hpp"
 #include "boost/unordered/unordered_flat_map.hpp"
 
-#include <mutex>
+#include "wil/resource.h"
 
 class ExemplarPatcher
 {
@@ -48,6 +48,6 @@ public:
 private:
 
 	PatchContainer patches;
-	std::mutex mutex;
+	wil::critical_section sync;
 	bool debugLoggingEnabled;
 };
