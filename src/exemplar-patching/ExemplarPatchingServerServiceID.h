@@ -20,34 +20,5 @@
  */
 
 #pragma once
-#include "cGZPersistResourceKey.h"
-#include "cISCPropertyHolder.h"
-#include "cISCResExemplar.h"
-#include "cRZAutoRefCount.h"
-#include "PersistResourceKeyBoostHash.h"
 
-#include "boost/container/deque.hpp"
-#include "boost/unordered/unordered_flat_map.hpp"
-
-#include "wil/resource.h"
-
-class ExemplarPatcher
-{
-public:
-
-	using PatchContainer = boost::unordered_flat_map<const cGZPersistResourceKey, boost::container::deque<cRZAutoRefCount<cISCPropertyHolder>>>;
-
-	ExemplarPatcher();
-
-	void LoadExemplarPatches();
-
-	void ApplyPatches(const cGZPersistResourceKey& key, cISCResExemplar* pExemplar);
-
-	void SetDebugLoggingEnabled(bool enabled);
-
-private:
-
-	PatchContainer patches;
-	wil::critical_section sync;
-	bool debugLoggingEnabled;
-};
+static const uint32_t GZSERVID_ExemplarPatchingServer = 0x0E7062FD;

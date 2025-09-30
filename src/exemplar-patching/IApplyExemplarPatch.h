@@ -21,11 +21,16 @@
 
 #pragma once
 #include "cIGZUnknown.h"
+#include "ExemplarPatchingServerServiceID.h"
 
-static const uint32_t GZIID_IExemplarResourceFactoryProxy = 0xC3D60F23;
+static const uint32_t GZIID_IApplyExemplarPatch = 0xDCF337F4;
 
-class IExemplarResourceFactoryProxy : public cIGZUnknown
+class cGZPersistResourceKey;
+class cISCResExemplar;
+
+class IApplyExemplarPatch : public cIGZUnknown
 {
 public:
-	virtual void InitializeExemplarPatchData(bool debugLoggingEnabled) = 0;
+
+	virtual void ApplyPatches(const cGZPersistResourceKey& key, cISCResExemplar* pExemplar) = 0;
 };

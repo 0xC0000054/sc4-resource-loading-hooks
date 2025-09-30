@@ -23,8 +23,8 @@
 #include "ResourceFactoryProxy.h"
 #include "cIExemplarLoadHookServer.h"
 #include "cIExemplarPatchingServer.h"
-#include "ExemplarPatcher.h"
-#include "IExemplarResourceFactoryProxy.h"
+#include "cRZSysServPtr.h"
+#include "IApplyExemplarPatch.h"
 #include <unordered_map>
 #include <unordered_set>
 
@@ -33,9 +33,7 @@ static constexpr uint32_t ExemplarTypeID = 0x6534284A;
 
 class ExemplarResourceFactoryProxy final :
 	public ResourceFactoryProxy,
-	private cIExemplarLoadHookServer,
-	private cIExemplarPatchingServer,
-	private IExemplarResourceFactoryProxy
+	private cIExemplarLoadHookServer
 {
 public:
 
@@ -60,14 +58,6 @@ public:
 
 	bool AddLoadErrorNotification(cIExemplarLoadErrorHookTarget* target) override;
 	bool RemoveLoadErrorNotification(cIExemplarLoadErrorHookTarget* target) override;
-
-	// IExemplarResourceFactoryProxy
-
-	void InitializeExemplarPatchData(bool debugLoggingEnabled) override;
-
-	// cIExemplarPatchingServer
-
-	void ScanForExemplarPatches();
 
 private:
 
@@ -101,6 +91,6 @@ private:
 
 	std::unordered_map<cIExemplarLoadHookTarget*, ExemplarTGIFilter> exemplarLoadTargets;
 	std::unordered_set<cIExemplarLoadErrorHookTarget*> exemplarLoadErrorTargets;
-	ExemplarPatcher exemplarPatcher;
+	cRZSysServPtr<IApplyExemplarPatch, GZIID_IApplyExemplarPatch, GZSERVID_ExemplarPatchingServer> exemplarPatcher;
 };
 

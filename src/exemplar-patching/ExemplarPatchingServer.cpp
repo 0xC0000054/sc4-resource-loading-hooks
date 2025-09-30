@@ -19,7 +19,11 @@
  * If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "ExemplarPatcher.h"
+#include "ExemplarPatchingServer.h"
+#include "cIGZCmdLine.h"
+#include "cIGZFrameWork.h"
+#include "cIGZMessage2.h"
+#include "cIGZMessageServer2.h"
 #include "cIGZPersistDBSegment.h"
 #include "cIGZPersistDBSegmentMultiPackedFiles.h"
 #include "cIGZPersistResource.h"
@@ -28,6 +32,7 @@
 #include "cIGZVariant.h"
 #include "cISCProperty.h"
 #include "cISCResExemplarCohort.h"
+#include "cRZCOMDllDirector.h"
 #include "GZServPtrs.h"
 #include "Logger.h"
 #include "PersistResourceKeyFilterByTypeAndGroup.h"
@@ -40,6 +45,10 @@ namespace
 	static constexpr uint32_t kExemplarNamePropertyId = 0x20;
 	static constexpr uint32_t kExemplarPatchTargetPropertyId = 0x0062e78a;
 
+	// Services with a priority at or below -3000000 will be initialized
+	// by the framework in PostAppInit.
+	static constexpr int32_t kExemplarPatchingServerPriority = -3000000;
+
 	struct ApplyPatchContext
 	{
 		cISCPropertyHolder* pTarget;
@@ -48,8 +57,8 @@ namespace
 
 		ApplyPatchContext(cISCPropertyHolder* pTarget, bool logPatchedProperties)
 			: pTarget(pTarget),
-			  logPatchedProperties(logPatchedProperties),
-			  writtenExemplarPatchHeader(false)
+			logPatchedProperties(logPatchedProperties),
+			writtenExemplarPatchHeader(false)
 		{
 		}
 	};
@@ -93,7 +102,7 @@ namespace
 	struct ExemplarPatchScanContext
 	{
 		cIGZPersistResourceManager* pResMan;
-		ExemplarPatcher::PatchContainer patches;
+		ExemplarPatchingServer::PatchContainer patches;
 
 		ExemplarPatchScanContext(cIGZPersistResourceManager* pResMan)
 			: pResMan(pResMan), patches()
@@ -233,11 +242,82 @@ namespace
 	}
 }
 
-ExemplarPatcher::ExemplarPatcher() : debugLoggingEnabled(false)
+ExemplarPatchingServer::ExemplarPatchingServer()
+	: cRZBaseSystemService(GZSERVID_ExemplarPatchingServer, kExemplarPatchingServerPriority),
+	  debugLoggingEnabled(false)
 {
 }
 
-void ExemplarPatcher::LoadExemplarPatches()
+bool ExemplarPatchingServer::QueryInterface(uint32_t riid, void** ppvObj)
+{
+	if (riid == GZIID_cIExemplarPatchingServer)
+	{
+		*ppvObj = static_cast<cIExemplarPatchingServer*>(this);
+		AddRef();
+
+		return true;
+	}
+	else if (riid == GZIID_IApplyExemplarPatch)
+	{
+		*ppvObj = static_cast<IApplyExemplarPatch*>(this);
+		AddRef();
+
+		return true;
+	}
+	else if (riid == GZIID_cIGZSystemService)
+	{
+		*ppvObj = static_cast<cIGZSystemService*>(this);
+		AddRef();
+
+		return true;
+	}
+
+	return cRZBaseUnknown::QueryInterface(riid, ppvObj);
+}
+
+uint32_t ExemplarPatchingServer::AddRef()
+{
+	return cRZBaseUnknown::AddRef();
+}
+
+uint32_t ExemplarPatchingServer::Release()
+{
+	return cRZBaseUnknown::Release();
+}
+
+bool ExemplarPatchingServer::Init()
+{
+	// We use a service priority that makes the framework initialize our service
+	// after the application.
+	// At this stage, DBPF files have already been loaded.
+
+	cIGZFrameWork* const pFrameWork = RZGetFrameWork();
+
+	if (pFrameWork)
+	{
+		cIGZCmdLine* const pCmdLine = pFrameWork->CommandLine();
+
+		if (pCmdLine)
+		{
+			debugLoggingEnabled = pCmdLine->IsSwitchPresent(cRZBaseString("exemplar-patch-debug-logging"));
+		}
+	}
+
+#ifndef NDEBUG
+	auto state = pFrameWork->GetState();
+#endif // !NDEBUG
+
+	ScanForExemplarPatches();
+
+	return true;
+}
+
+bool ExemplarPatchingServer::Shutdown()
+{
+	return true;
+}
+
+void ExemplarPatchingServer::ScanForExemplarPatches()
 {
 	auto guard = sync.lock();
 
@@ -290,7 +370,7 @@ void ExemplarPatcher::LoadExemplarPatches()
 	}
 }
 
-void ExemplarPatcher::ApplyPatches(const cGZPersistResourceKey& key, cISCResExemplar* pExemplar)
+void ExemplarPatchingServer::ApplyPatches(const cGZPersistResourceKey& key, cISCResExemplar* pExemplar)
 {
 	auto guard = sync.lock();
 
@@ -359,9 +439,4 @@ void ExemplarPatcher::ApplyPatches(const cGZPersistResourceKey& key, cISCResExem
 			patch->EnumProperties(ApplyPatchCallback, &context);
 		}
 	}
-}
-
-void ExemplarPatcher::SetDebugLoggingEnabled(bool enabled)
-{
-	debugLoggingEnabled = enabled;
 }

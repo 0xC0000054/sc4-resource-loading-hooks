@@ -52,6 +52,12 @@
     <Filter Include="Header Files\Exemplar Load Logging\Loggers">
       <UniqueIdentifier>{28178551-715e-4456-8617-09af5ada7ae1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Exemplar Patching">
+      <UniqueIdentifier>{cc24c14b-0951-429f-8716-c4d8cc00e63f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Exemplar Patching">
+      <UniqueIdentifier>{e1692e07-e70a-431b-8177-975df3ee54b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Logger.cpp">
@@ -102,9 +108,6 @@
     <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.cpp">
       <Filter>Source Files\Resource Factory Proxy\Exemplar</Filter>
     </ClCompile>
-    <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarPatcher.cpp">
-      <Filter>Source Files\Resource Factory Proxy\Exemplar</Filter>
-    </ClCompile>
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\PersistResourceKeyFilterBase.cpp">
       <Filter>Source Files\GZCOM</Filter>
     </ClCompile>
@@ -140,6 +143,12 @@
     </ClCompile>
     <ClCompile Include="FileSystem.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exemplar-patching\ExemplarPatchingServer.cpp">
+      <Filter>Source Files\Exemplar Patching</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseSystemService.cpp">
+      <Filter>Source Files\GZCOM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -197,12 +206,6 @@
     <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.h">
       <Filter>Header Files\Resource Factory Proxy\Exemplar</Filter>
     </ClInclude>
-    <ClInclude Include="resource-factory-proxies\Exemplar\IExemplarResourceFactoryProxy.h">
-      <Filter>Header Files\Resource Factory Proxy\Exemplar</Filter>
-    </ClInclude>
-    <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarPatcher.h">
-      <Filter>Header Files\Resource Factory Proxy\Exemplar</Filter>
-    </ClInclude>
     <ClInclude Include="exemplar-load-logging\Loggers\ExemplarErrorLogger.h">
       <Filter>Header Files\Exemplar Load Logging\Loggers</Filter>
     </ClInclude>
@@ -232,6 +235,15 @@
     </ClInclude>
     <ClInclude Include="public\include\cIExemplarPatchingServer.h">
       <Filter>Header Files\Public Headers\Exemplar</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-patching\ExemplarPatchingServer.h">
+      <Filter>Header Files\Exemplar Patching</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-patching\ExemplarPatchingServerServiceID.h">
+      <Filter>Header Files\Exemplar Patching</Filter>
+    </ClInclude>
+    <ClInclude Include="exemplar-patching\IApplyExemplarPatch.h">
+      <Filter>Header Files\Exemplar Patching</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

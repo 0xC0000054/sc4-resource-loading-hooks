@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseString.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseSystemService.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseUnknown.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseVariant.cpp" />
     <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZCOMDllDirector.cpp" />
@@ -32,9 +33,9 @@
     <ClCompile Include="exemplar-load-logging\Loggers\ExemplarTGILogger.cpp" />
     <ClCompile Include="exemplar-load-logging\Loggers\ExemplarTypeLogger.cpp" />
     <ClCompile Include="exemplar-load-logging\Loggers\FilteredExemplarLogger.cpp" />
+    <ClCompile Include="exemplar-patching\ExemplarPatchingServer.cpp" />
     <ClCompile Include="FileSystem.cpp" />
     <ClCompile Include="public\examples\LogExemplarTGIDllDirector.cpp" />
-    <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarPatcher.cpp" />
     <ClCompile Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.cpp" />
     <ClCompile Include="resource-factory-proxies\ResourceFactoryProxy.cpp" />
     <ClCompile Include="ResourceLoadingHooksDllDirector.cpp" />
@@ -60,15 +61,16 @@
     <ClInclude Include="exemplar-load-logging\Loggers\ExemplarTGILogger.h" />
     <ClInclude Include="exemplar-load-logging\Loggers\ExemplarTypeLogger.h" />
     <ClInclude Include="exemplar-load-logging\Loggers\FilteredExemplarLogger.h" />
+    <ClInclude Include="exemplar-patching\ExemplarPatchingServer.h" />
+    <ClInclude Include="exemplar-patching\ExemplarPatchingServerServiceID.h" />
+    <ClInclude Include="exemplar-patching\IApplyExemplarPatch.h" />
     <ClInclude Include="FileSystem.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="public\include\cIExemplarLoadErrorHookTarget.h" />
     <ClInclude Include="public\include\cIExemplarLoadHookServer.h" />
     <ClInclude Include="public\include\cIExemplarLoadHookTarget.h" />
     <ClInclude Include="public\include\cIExemplarPatchingServer.h" />
-    <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarPatcher.h" />
     <ClInclude Include="resource-factory-proxies\Exemplar\ExemplarResourceFactoryProxy.h" />
-    <ClInclude Include="resource-factory-proxies\Exemplar\IExemplarResourceFactoryProxy.h" />
     <ClInclude Include="resource-factory-proxies\ResourceFactoryProxy.h" />
     <ClInclude Include="StringViewUtil.h" />
     <ClInclude Include="version.h" />
@@ -126,7 +128,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\frozen\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\frozen\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\exemplar-patching;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
@@ -150,7 +152,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\frozen\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\frozen\include;.\;.\public\include;.\exemplar-load-logging;.\exemplar-load-logging\Loggers;.\exemplar-patching;.\resource-factory-proxies;.\resource-factory-proxies\Exemplar</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>

@@ -100,41 +100,48 @@ uint32_t ExemplarLoadLogger::Release()
 	return refCount;
 }
 
-void ExemplarLoadLogger::Init(const cIGZCmdLine& cmdLine, cIGZCOM* pCOM)
+void ExemplarLoadLogger::Init(cIGZFrameWork* const pFrameWork)
 {
-	cRZBaseString value;
-
-	if (cmdLine.IsSwitchPresent(cRZBaseString("exemplar-log"), value, true))
+	if (pFrameWork)
 	{
-		SetLoggerFromCommandLine(value.ToChar());
+		cRZBaseString value;
 
-		if (exemplarLogger && pCOM)
+		cIGZCmdLine* pCmdLine = pFrameWork->CommandLine();
+
+		if (pCmdLine && pCmdLine->IsSwitchPresent(cRZBaseString("exemplar-log"), value, true))
 		{
-			// We can put the cIExemplarLoadHookServer GetClassObject call in OnStart because this class
-			// is a child director of ResourceLoadingHooksDllDirector, it will call our OnStart after it
-			// adds the cIExemplarLoadHookServer class into the game.
-			//
-			// Other DLLs should put the cIExemplarLoadHookServer GetClassObject call in PreAppInit.
-			// This is because there is no guarantee that SC4 will load your DLL and call its OnStart
-			// method after the SC4ResourceLoadingHooks DLL.
+			SetLoggerFromCommandLine(value.ToChar());
 
-			cRZAutoRefCount<cIExemplarLoadHookServer> exemplarHookServer;
+			cIGZCOM* const pCOM = pFrameWork->GetCOMObject();
 
-			if (pCOM->GetClassObject(
-				GZCLSID_cIExemplarLoadHookServer,
-				GZIID_cIExemplarLoadHookServer,
-				exemplarHookServer.AsPPVoid()))
+			if (exemplarLogger && pCOM)
 			{
-				const ExemplarLoggerOptions options = exemplarLogger->GetLoggerOptions();
+				// We can put the cIExemplarLoadHookServer GetClassObject call in OnStart because this class
+				// is a child director of ResourceLoadingHooksDllDirector, it will call our OnStart after it
+				// adds the cIExemplarLoadHookServer class into the game.
+				//
+				// Other DLLs should put the cIExemplarLoadHookServer GetClassObject call in PreAppInit.
+				// This is because there is no guarantee that SC4 will load your DLL and call its OnStart
+				// method after the SC4ResourceLoadingHooks DLL.
 
-				if ((options & ExemplarLoggerOptions::LogExemplarLoading) != ExemplarLoggerOptions::None)
-				{
-					exemplarHookServer->AddLoadNotification(this);
-				}
+				cRZAutoRefCount<cIExemplarLoadHookServer> exemplarHookServer;
 
-				if ((options & ExemplarLoggerOptions::LogExemplarLoadingErrors) != ExemplarLoggerOptions::None)
+				if (pCOM->GetClassObject(
+					GZCLSID_cIExemplarLoadHookServer,
+					GZIID_cIExemplarLoadHookServer,
+					exemplarHookServer.AsPPVoid()))
 				{
-					exemplarHookServer->AddLoadErrorNotification(this);
+					const ExemplarLoggerOptions options = exemplarLogger->GetLoggerOptions();
+
+					if ((options & ExemplarLoggerOptions::LogExemplarLoading) != ExemplarLoggerOptions::None)
+					{
+						exemplarHookServer->AddLoadNotification(this);
+					}
+
+					if ((options & ExemplarLoggerOptions::LogExemplarLoadingErrors) != ExemplarLoggerOptions::None)
+					{
+						exemplarHookServer->AddLoadErrorNotification(this);
+					}
 				}
 			}
 		}

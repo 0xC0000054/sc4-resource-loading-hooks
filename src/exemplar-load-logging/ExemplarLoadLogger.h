@@ -26,8 +26,7 @@
 #include <filesystem>
 #include <memory>
 
-class cIGZCmdLine;
-class cIGZCOM;
+class cIGZFrameWork;
 
 class ExemplarLoadLogger
 	: private cIExemplarLoadHookTarget,
@@ -43,7 +42,7 @@ public:
 
 	uint32_t Release() override;
 
-	void Init(const cIGZCmdLine& cmdLine, cIGZCOM* pCOM);
+	void Init(cIGZFrameWork* const pFrameWork);
 
 private:
 

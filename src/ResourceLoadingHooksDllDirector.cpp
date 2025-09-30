@@ -23,6 +23,7 @@
 #include "FileSystem.h"
 #include "Logger.h"
 #include "ExemplarLoadLogger.h"
+#include "ExemplarPatchingServer.h"
 #include "ExemplarResourceFactoryProxy.h"
 #include "cIGZApp.h"
 #include "cIGZCmdLine.h"
@@ -55,7 +56,7 @@ static cIGZUnknown* CreateExemplarResourceProxy()
 	return static_cast<cIGZPersistResourceFactory*>(new ExemplarResourceFactoryProxy());
 }
 
-static bool QueryForExemplarResourceFactoryProxyInterface(uint32_t riid, void** ppvObj)
+static bool CreateExemplarLoadHookServer(uint32_t riid, void** ppvObj)
 {
 	bool result = false;
 
@@ -78,6 +79,20 @@ static bool QueryForExemplarResourceFactoryProxyInterface(uint32_t riid, void** 
 	return result;
 }
 
+static bool QueryForExemplarPatchingServerInterface(uint32_t riid, void** ppvObj)
+{
+	bool result = false;
+
+	cIGZFrameWork* const pFrameWork = RZGetFrameWork();
+
+	if (pFrameWork)
+	{
+		result = pFrameWork->GetSystemService(GZSERVID_ExemplarPatchingServer, riid, ppvObj);
+	}
+
+	return result;
+}
+
 class ResourceLoadingHooksDllDirector : public cRZCOMDllDirector
 {
 public:
@@ -85,8 +100,8 @@ public:
 	ResourceLoadingHooksDllDirector()
 	{
 		AddCls(GZCLSID_ExemplarFactoryProxy, CreateExemplarResourceProxy);
-		AddCls(GZCLSID_cIExemplarLoadHookServer, QueryForExemplarResourceFactoryProxyInterface);
-		AddCls(GZCLSID_cIExemplarPatchingServer, QueryForExemplarResourceFactoryProxyInterface);
+		AddCls(GZCLSID_cIExemplarLoadHookServer, CreateExemplarLoadHookServer);
+		AddCls(GZCLSID_cIExemplarPatchingServer, QueryForExemplarPatchingServerInterface);
 
 		std::filesystem::path dllFolderPath = FileSystem::GetDllFolderPath();
 
@@ -103,7 +118,7 @@ public:
 		return kResourceLoadingHooksDirectorID;
 	}
 
-	void RegisterResourceFactoryProxies()
+	void RegisterExemplarResourceFactoryProxy()
 	{
 		Logger& logger = Logger::GetInstance();
 
@@ -126,40 +141,22 @@ public:
 		}
 	}
 
-	bool OnStart(cIGZCOM* pCOM)
+	void AddExemplarPatchingService()
 	{
-		RegisterResourceFactoryProxies();
+		cRZAutoRefCount<cIGZSystemService> service(
+			new ExemplarPatchingServer(),
+			cRZAutoRefCount<cIGZSystemService>::kAddRef);
 
-		mpFrameWork->AddHook(this);
-
-		return true;
+		mpFrameWork->AddSystemService(service);
 	}
 
-	bool PostAppInit()
+	bool OnStart(cIGZCOM* pCOM)
 	{
-		bool exemplarPatchDebugLoggingEnabled = false;
-
-		cIGZCmdLine* pCmdLine = mpFrameWork->CommandLine();
-
-		if (pCmdLine)
-		{
-			exemplarPatchDebugLoggingEnabled = pCmdLine->IsSwitchPresent(cRZBaseString("exemplar-patch-debug-logging"));
-			exemplarLoadLogger.Init(*pCmdLine, mpCOM);
-		}
-
-		cRZAutoRefCount<IExemplarResourceFactoryProxy> pProxy;
-
-		if (QueryForExemplarResourceFactoryProxyInterface(GZIID_IExemplarResourceFactoryProxy, pProxy.AsPPVoid()))
-		{
-			pProxy->InitializeExemplarPatchData(exemplarPatchDebugLoggingEnabled);
-		}
-		else
-		{
-			Logger& logger = Logger::GetInstance();
-			logger.WriteLine(
-				LogLevel::Error,
-				"Failed to initialize the exemplar patch system.");
-		}
+		// The exemplar patching service must be present
+		// before our exemplar resource factory proxy is registered.
+		AddExemplarPatchingService();
+		RegisterExemplarResourceFactoryProxy();
+		exemplarLoadLogger.Init(mpFrameWork);
 
 		return true;
 	}
