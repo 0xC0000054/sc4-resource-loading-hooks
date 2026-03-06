@@ -99,87 +99,6 @@ namespace
 		}
 	}
 
-	struct ExemplarPatchScanContext
-	{
-		cIGZPersistResourceManager* pResMan;
-		ExemplarPatchingServer::PatchContainer patches;
-
-		ExemplarPatchScanContext(cIGZPersistResourceManager* pResMan)
-			: pResMan(pResMan), patches()
-		{
-		}
-	};
-
-	void ExemplarPatchScanCallback(cGZPersistResourceKey const& key, void* pContext)
-	{
-		auto context = static_cast<ExemplarPatchScanContext*>(pContext);
-
-		cRZAutoRefCount<cISCResExemplarCohort> cohort;
-
-		if (context->pResMan->GetResource(key, GZIID_cISCResExemplarCohort, cohort.AsPPVoid(), 0, nullptr))
-		{
-			cISCPropertyHolder* propHolder = cohort->AsISCPropertyHolder();
-
-			auto property = propHolder->GetProperty(kExemplarPatchTargetPropertyId);
-
-			if (property)
-			{
-				const cIGZVariant* variant = property->GetPropertyValue();
-				const uint32_t reps = variant->GetCount();
-
-				if (variant->GetType() != cIGZVariant::Type::Uint32Array)
-				{
-					Logger& logger = Logger::GetInstance();
-					logger.WriteLineFormatted(LogLevel::Error,
-						"Exemplar Patch Target property requires type Uint32Array: T:0x%08X G:0x%08X I:0x%08X.",
-						key.type, key.group, key.instance);
-				}
-				else if (reps > 0)
-				{
-					if ((reps % 2) != 0)
-					{
-						Logger& logger = Logger::GetInstance();
-						logger.WriteLineFormatted(LogLevel::Error,
-							"Exemplar Patch Target property requires even number of values: T:0x%08X G:0x%08X I:0x%08X.",
-							key.type, key.group, key.instance);
-					}
-					else
-					{
-						auto& patches = context->patches;
-						const uint32_t* values = variant->RefUint32();
-
-						for (uint32_t i = 1; i < reps; i += 2)
-						{
-							const cGZPersistResourceKey targetTgi(kExemplarTypeId, values[i - 1], values[i]);
-
-							auto item = patches.find(targetTgi);
-
-							if (item != patches.end())
-							{
-								cRZAutoRefCount<cISCPropertyHolder> containerPropertyHolder(
-									propHolder,
-									cRZAutoRefCount<cISCPropertyHolder>::kAddRef);
-
-								item->second.push_back(std::move(containerPropertyHolder));
-							}
-							else
-							{
-								cRZAutoRefCount<cISCPropertyHolder> containerPropertyHolder(
-									propHolder,
-									cRZAutoRefCount<cISCPropertyHolder>::kAddRef);
-
-								boost::container::deque<cRZAutoRefCount<cISCPropertyHolder>> queue;
-								queue.push_back(std::move(containerPropertyHolder));
-
-								patches.emplace(targetTgi, std::move(queue));
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
 	bool GetResourceFilePath(const cGZPersistResourceKey& key, cIGZString& path)
 	{
 		bool result = false;
@@ -217,6 +136,140 @@ namespace
 		}
 
 		return result;
+	}
+
+	struct ExemplarPatchScanContext
+	{
+		cIGZPersistResourceManager* pResMan;
+		ExemplarPatchingServer::PatchContainer patches;
+		uint32_t loadedExemplarPatchCount;
+		bool debugLoggingEnabled;
+
+		ExemplarPatchScanContext(cIGZPersistResourceManager* pResMan, bool debugLoggingEnabled)
+			: pResMan(pResMan),
+			  patches(),
+			  loadedExemplarPatchCount(0),
+			  debugLoggingEnabled(debugLoggingEnabled)
+		{
+		}
+	};
+
+	void LogExemplarPatchScanError(const char* message, cGZPersistResourceKey const& key)
+	{
+		Logger& logger = Logger::GetInstance();
+
+		cRZBaseString path;
+
+		if (GetResourceFilePath(key, path))
+		{
+			logger.WriteLineFormatted(LogLevel::Error,
+				"%s: T:0x%08X G:0x%08X I:0x%08X in %s",
+				message,
+				key.type,
+				key.group,
+				key.instance,
+				path.ToChar());
+		}
+		else
+		{
+			logger.WriteLineFormatted(LogLevel::Error,
+				"%s: T:0x%08X G:0x%08X I:0x%08X.",
+				message,
+				key.type,
+				key.group,
+				key.instance);
+		}
+	}
+
+	void ExemplarPatchScanCallback(cGZPersistResourceKey const& key, void* pContext)
+	{
+		auto context = static_cast<ExemplarPatchScanContext*>(pContext);
+
+		cRZAutoRefCount<cISCResExemplarCohort> cohort;
+
+		if (context->pResMan->GetResource(key, GZIID_cISCResExemplarCohort, cohort.AsPPVoid(), 0, nullptr))
+		{
+			cISCPropertyHolder* propHolder = cohort->AsISCPropertyHolder();
+
+			auto property = propHolder->GetProperty(kExemplarPatchTargetPropertyId);
+
+			if (property)
+			{
+				const cIGZVariant* variant = property->GetPropertyValue();
+				const uint32_t reps = variant->GetCount();
+
+				if (variant->GetType() != cIGZVariant::Type::Uint32Array)
+				{
+					LogExemplarPatchScanError(
+						"Exemplar Patch Target property requires type Uint32Array",
+						key);
+				}
+				else if (reps > 0)
+				{
+					if ((reps % 2) != 0)
+					{
+						LogExemplarPatchScanError(
+							"Exemplar Patch Target property requires even number of values",
+							key);
+					}
+					else
+					{
+						context->loadedExemplarPatchCount++;
+
+						if (context->debugLoggingEnabled)
+						{
+							cRZBaseString path;
+
+							if (GetResourceFilePath(key, path))
+							{
+								Logger& logger = Logger::GetInstance();
+								logger.WriteLineFormatted(
+									LogLevel::Info,
+									"Exemplar patch T=0x%08X, G=0x%08X, I=0x%08X loaded from %s",
+									key.type,
+									key.group,
+									key.instance,
+									path.ToChar());
+							}
+						}
+
+						auto& patches = context->patches;
+						const uint32_t* values = variant->RefUint32();
+
+						for (uint32_t i = 1; i < reps; i += 2)
+						{
+							const cGZPersistResourceKey targetTgi(kExemplarTypeId, values[i - 1], values[i]);
+
+							auto item = patches.find(targetTgi);
+
+							if (item != patches.end())
+							{
+								cRZAutoRefCount<cISCPropertyHolder> containerPropertyHolder(
+									propHolder,
+									cRZAutoRefCount<cISCPropertyHolder>::kAddRef);
+
+								item->second.push_back(std::move(containerPropertyHolder));
+							}
+							else
+							{
+								cRZAutoRefCount<cISCPropertyHolder> containerPropertyHolder(
+									propHolder,
+									cRZAutoRefCount<cISCPropertyHolder>::kAddRef);
+
+								boost::container::deque<cRZAutoRefCount<cISCPropertyHolder>> queue;
+								queue.push_back(std::move(containerPropertyHolder));
+
+								patches.emplace(targetTgi, std::move(queue));
+							}
+						}
+					}
+				}
+			}
+		}
+		else
+		{
+			LogExemplarPatchScanError("Exemplar Patch is not a valid cohort", key);
+		}
 	}
 
 	bool GetResourceKeyAndNameFromExemplarPatch(
@@ -332,12 +385,15 @@ void ExemplarPatchingServer::ScanForExemplarPatches()
 		uint32_t res = pResMan->GetAvailableResourceList(pResourceList.AsPPObj(), filter);
 		filter->Release();
 
+		uint32_t loadedExemplarPatchCount = 0;
+
 		if (pResourceList->Size() > 0)
 		{
-			ExemplarPatchScanContext context(pResMan);
+			ExemplarPatchScanContext context(pResMan, debugLoggingEnabled);
 
 			pResourceList->EnumKeys(ExemplarPatchScanCallback, &context);
 
+			loadedExemplarPatchCount = context.loadedExemplarPatchCount;
 			patches.clear();
 			patches = std::move(context.patches);
 		}
@@ -345,28 +401,8 @@ void ExemplarPatchingServer::ScanForExemplarPatches()
 		Logger& logger = Logger::GetInstance();
 		logger.WriteLineFormatted(LogLevel::Info,
 			"Loaded %u Exemplar patches targeting, in total, %u Exemplar files.",
-			pResourceList->Size(),
+			loadedExemplarPatchCount,
 			patches.size());
-
-		if (debugLoggingEnabled)
-		{
-			pResourceList->EnumKeys([](auto key, void* pContext)
-				{
-					cRZBaseString path;
-
-					if (GetResourceFilePath(key, path))
-					{
-						Logger& logger = Logger::GetInstance();
-						logger.WriteLineFormatted(
-							LogLevel::Info,
-							"Exemplar patch T=0x%08X, G=0x%08X, I=0x%08X loaded from %s",
-							key.type,
-							key.group,
-							key.instance,
-							path.ToChar());
-					}
-				}, nullptr);
-		}
 	}
 }
 
